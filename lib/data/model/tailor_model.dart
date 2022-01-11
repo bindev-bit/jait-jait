@@ -23,7 +23,7 @@ List<TailorModel> demoTailor = [
     image: "assets/img/avatars/avatar1.jpg",
   ),
   TailorModel(
-    name: "Bambang",
+    name: "Tyas",
     category: "Modiste",
     rating: 5,
     about:
@@ -32,7 +32,7 @@ List<TailorModel> demoTailor = [
     image: "assets/img/avatars/avatar5.jpg",
   ),
   TailorModel(
-    name: "Bambang",
+    name: "Dilah",
     category: "Modiste",
     rating: 5,
     about:
@@ -41,7 +41,7 @@ List<TailorModel> demoTailor = [
     image: "assets/img/avatars/avatar4.jpg",
   ),
   TailorModel(
-    name: "Bambang",
+    name: "Rebbeka",
     category: "Modiste",
     rating: 5,
     about:
@@ -50,7 +50,7 @@ List<TailorModel> demoTailor = [
     image: "assets/img/avatars/avatar2.jpg",
   ),
   TailorModel(
-    name: "Bambang",
+    name: "Ali",
     category: "Modiste",
     rating: 5,
     about:
@@ -59,7 +59,7 @@ List<TailorModel> demoTailor = [
     image: "assets/img/avatars/avatar3.jpg",
   ),
   TailorModel(
-    name: "Bambang",
+    name: "Ayu",
     category: "Modiste",
     rating: 5,
     about:

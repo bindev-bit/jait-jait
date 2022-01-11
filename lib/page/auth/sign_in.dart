@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:jait_jait/components/const/color.dart';
 import 'package:jait_jait/data/getx/auth_getx.dart';
+import 'package:jait_jait/data/getx/onboarding_getx.dart';
 import 'package:jait_jait/page/auth/sign_up/sign_up.dart';
 import 'package:jait_jait/page/home/home_page.dart';
 
@@ -10,6 +11,7 @@ class SignInPage extends StatelessWidget {
   SignInPage({Key? key}) : super(key: key);
 
   final AuthController controller = Get.find();
+  final OnBoardingController onBoardingController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +157,10 @@ class SignInPage extends StatelessWidget {
                       EasyLoading.show();
                       await Future.delayed(const Duration(milliseconds: 500),
                           () {
+                        onBoardingController.firstBuild = false.obs;
                         EasyLoading.dismiss();
                         return Get.to(
-                          HomePage(),
+                          const HomePage(),
                           transition: Transition.rightToLeftWithFade,
                           duration: const Duration(
                             milliseconds: 1200,

@@ -6,10 +6,12 @@ class CustomIconButton extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget icon;
   final double? padding;
+  final Color? backgroundColor;
   const CustomIconButton({
     required this.tooltip,
     this.onTap,
     this.padding = 5,
+    this.backgroundColor,
     required this.icon,
     Key? key,
   }) : super(key: key);
@@ -30,7 +32,7 @@ class CustomIconButton extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
-                color: secondaryColor.withOpacity(.4),
+                color: backgroundColor ?? secondaryColor.withOpacity(.4),
               ),
               padding: const EdgeInsets.all(10),
               child: icon,

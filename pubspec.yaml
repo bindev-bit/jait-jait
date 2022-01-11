@@ -20,6 +20,8 @@ dependencies:
   flutter_easyloading: ^3.0.3
   persistent_bottom_nav_bar: ^4.0.2
   bubble: ^1.2.1
+  table_calendar: ^3.0.3
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:

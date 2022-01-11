@@ -1,54 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jait_jait/components/const/color.dart';
+import 'package:jait_jait/components/icon_button.dart';
 import 'package:jait_jait/data/model/article_model.dart';
-import 'package:jait_jait/page/article/article_detail.dart';
 
-class ListArticles extends StatelessWidget {
-  const ListArticles({Key? key}) : super(key: key);
+import 'article_detail.dart';
+
+class ArticleSaved extends StatefulWidget {
+  const ArticleSaved({Key? key}) : super(key: key);
 
   @override
+  _ArticleSavedState createState() => _ArticleSavedState();
+}
+
+class _ArticleSavedState extends State<ArticleSaved> {
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title: const Text(
+          "Saved",
+          style: TextStyle(color: primaryColor),
+        ),
+        centerTitle: true,
+        leading: Hero(
+          tag: 'back-button',
+          child: CustomIconButton(
+            tooltip: 'Back',
+            icon: const Icon(
+              Icons.arrow_back_outlined,
+              color: primaryColor,
+            ),
+            onTap: () => Get.back(),
+          ),
+        ),
+      ),
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
               children: [
-                const Text(
-                  "Artikel Populer",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(4.0),
-                  splashColor: primaryColor.withOpacity(.1),
-                  highlightColor: primaryColor.withOpacity(.2),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 6,
-                    ),
-                    child: Text(
-                      "Lihat semua",
-                      style: TextStyle(color: primaryColor.withOpacity(.4)),
-                    ),
-                  ),
-                )
+                ...listArticles.map((e) => _articles(e)),
               ],
             ),
           ),
-          ...listArticles.map((e) => _articles(e)),
-        ],
+        ),
       ),
     );
   }

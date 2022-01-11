@@ -1,8 +1,9 @@
 import 'package:bubble/bubble.dart';
-import 'package:bubble/issue_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jait_jait/components/const/color.dart';
+import 'package:jait_jait/data/model/tailor_model.dart';
+import 'package:jait_jait/page/tailor/tailor_detail.dart';
 
 import '../icon_button.dart';
 
@@ -42,27 +43,33 @@ class MessageDetail extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CustomIconButton(
-                        tooltip: 'Back',
-                        icon: const Icon(
-                          Icons.arrow_back_outlined,
-                          color: primaryColor,
+                      Hero(
+                        tag: 'back-button',
+                        child: CustomIconButton(
+                          tooltip: 'Back',
+                          icon: const Icon(
+                            Icons.arrow_back_outlined,
+                            color: primaryColor,
+                          ),
+                          onTap: () => Get.back(),
                         ),
-                        onTap: () => Get.back(),
                       ),
                       const SizedBox(width: 10),
-                      const Hero(
+                      Hero(
                         tag: 'message-name',
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            "Dillah Probokusumo",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                        child: GestureDetector(
+                          onTap: () => Get.to(DetailUser(demoTailor[1])),
+                          child: const FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              "Dillah Probokusumo",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
