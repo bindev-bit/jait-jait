@@ -155,9 +155,9 @@ class SignInPage extends StatelessWidget {
                     child: const Text("Login"),
                     onPressed: () async {
                       EasyLoading.show();
+                      onBoardingController.removeFirstBuild();
                       await Future.delayed(const Duration(milliseconds: 500),
                           () {
-                        onBoardingController.firstBuild = false.obs;
                         EasyLoading.dismiss();
                         return Get.to(
                           const HomePage(),

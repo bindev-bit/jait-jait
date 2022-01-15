@@ -24,7 +24,7 @@ class OnBoardingController extends GetxController {
   }
 
   removeFirstBuild() {
-    onBoardingStorage.write('firstBuild', false);
-    firstBuild.value = false;
+    onBoardingStorage.write('firstBuild', true);
+    firstBuild.value = true;
   }
 }
