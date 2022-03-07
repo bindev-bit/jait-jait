@@ -27,4 +27,9 @@ class OnBoardingController extends GetxController {
     onBoardingStorage.write('firstBuild', true);
     firstBuild.value = true;
   }
+
+  firstBuildScreen() {
+    onBoardingStorage.write('firstBuild', false);
+    firstBuild.value = false;
+  }
 }

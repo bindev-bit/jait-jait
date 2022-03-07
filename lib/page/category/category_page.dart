@@ -116,7 +116,7 @@ class _CategoryPageState extends State<CategoryPage>
                           child: InkWell(
                             onTap: () => Get.to(
                               DetailUser(e),
-                              duration: const Duration(milliseconds: 2500),
+                              duration: const Duration(milliseconds: 800),
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                             child: Padding(

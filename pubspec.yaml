@@ -23,6 +23,22 @@ dependencies:
   table_calendar: ^3.0.3
   flutter_rating_bar: ^4.0.0
 
+  firebase_core: ^1.7.0
+  flutter_chat_ui: ^1.5.4
+  flutter_firebase_chat_core: ^1.5.2
+  firebase_auth: ^3.3.5
+  firebase_storage: ^10.2.5
+  flutter_chat_types: ^3.2.2
+
+  syncfusion_flutter_datepicker: ^19.4.42
+
+  file_picker: ^4.3.2
+  http: ^0.13.4
+  image_picker: ^0.8.4+4
+  mime: ^1.0.1
+  open_file: ^3.2.1
+  path_provider: ^2.0.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

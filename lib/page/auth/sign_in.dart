@@ -7,10 +7,16 @@ import 'package:jait_jait/data/getx/onboarding_getx.dart';
 import 'package:jait_jait/page/auth/sign_up/sign_up.dart';
 import 'package:jait_jait/page/home/home_page.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   SignInPage({Key? key}) : super(key: key);
 
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   final AuthController controller = Get.find();
+
   final OnBoardingController onBoardingController = Get.find();
 
   @override
@@ -155,18 +161,41 @@ class SignInPage extends StatelessWidget {
                     child: const Text("Login"),
                     onPressed: () async {
                       EasyLoading.show();
-                      onBoardingController.removeFirstBuild();
-                      await Future.delayed(const Duration(milliseconds: 500),
-                          () {
-                        EasyLoading.dismiss();
-                        return Get.to(
-                          const HomePage(),
-                          transition: Transition.rightToLeftWithFade,
-                          duration: const Duration(
-                            milliseconds: 1200,
+
+                      try {
+                        await controller.tapLogin();
+
+                        onBoardingController.removeFirstBuild();
+                        await Future.delayed(const Duration(milliseconds: 500),
+                            () {
+                          EasyLoading.dismiss();
+                          return Get.to(
+                            const HomePage(),
+                            transition: Transition.rightToLeftWithFade,
+                            duration: const Duration(
+                              milliseconds: 1200,
+                            ),
+                          );
+                        });
+                      } catch (e) {
+                        await showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                            content: Text(
+                              e.toString(),
+                            ),
+                            title: const Text('Error'),
                           ),
                         );
-                      });
+                      }
                     },
                   ),
                 ),

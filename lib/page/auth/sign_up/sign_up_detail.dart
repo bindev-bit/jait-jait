@@ -1,13 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:jait_jait/components/const/color.dart';
 import 'package:jait_jait/data/getx/auth_getx.dart';
+import 'package:jait_jait/data/getx/onboarding_getx.dart';
 import 'package:jait_jait/page/home/home_page.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class SignUpDetailPage extends StatelessWidget {
+class SignUpDetailPage extends StatefulWidget {
   SignUpDetailPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpDetailPage> createState() => _SignUpDetailPageState();
+}
+
+class _SignUpDetailPageState extends State<SignUpDetailPage> {
   final AuthController controller = Get.find();
+  final OnBoardingController onBoardingController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +81,19 @@ class SignUpDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: TextFormField(
+                        onTap: () async {
+                          final DateTime? selected = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2010),
+                            lastDate: DateTime(2025),
+                          );
+
+                          if (selected != null && selected != DateTime.now()) {
+                            controller.birthdayController.value.text =
+                                "${selected.day}/${selected.month}/${selected.year}";
+                          }
+                        },
                         controller: controller.birthdayController.value,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
@@ -88,6 +112,7 @@ class SignUpDetailPage extends StatelessWidget {
                         child: TextFormField(
                           controller: controller.heightController.value,
                           textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             label: const Text("Height"),
                             hintText: '0.0',
@@ -105,6 +130,7 @@ class SignUpDetailPage extends StatelessWidget {
                         child: TextFormField(
                           controller: controller.weightController.value,
                           textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             label: const Text("Weight"),
                             hintText: '0.0',
@@ -140,21 +166,44 @@ class SignUpDetailPage extends StatelessWidget {
             child: Hero(
               tag: 'auth-button',
               child: ElevatedButton(
-                child: const Text("Get started"),
-                onPressed: () async {
-                  EasyLoading.show();
-                  await Future.delayed(const Duration(milliseconds: 500), () {
-                    EasyLoading.dismiss();
-                    return Get.to(
-                      HomePage(),
-                      transition: Transition.rightToLeftWithFade,
-                      duration: const Duration(
-                        milliseconds: 1200,
-                      ),
-                    );
-                  });
-                },
-              ),
+                  child: const Text("Get started"),
+                  onPressed: () async {
+                    EasyLoading.show();
+                    try {
+                      await controller.tapRegister();
+                      EasyLoading.dismiss();
+                      onBoardingController.removeFirstBuild();
+                      await Future.delayed(const Duration(milliseconds: 500),
+                          () {
+                        return Get.to(
+                          const HomePage(),
+                          transition: Transition.rightToLeftWithFade,
+                          duration: const Duration(
+                            milliseconds: 1200,
+                          ),
+                        );
+                      });
+                    } catch (e) {
+                      EasyLoading.dismiss();
+                      await showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                          content: Text(
+                            e.toString(),
+                          ),
+                          title: const Text('Error'),
+                        ),
+                      );
+                    }
+                  }),
             ),
           ),
         ],

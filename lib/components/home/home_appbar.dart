@@ -4,7 +4,8 @@ import 'package:jait_jait/components/const/color.dart';
 import '../icon_button.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({Key? key}) : super(key: key);
+  GlobalKey<ScaffoldState> globalKey;
+  HomeAppBar(this.globalKey, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +18,13 @@ class HomeAppBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CircleAvatar(
-              radius: 18,
-              backgroundColor: primaryColor,
-              backgroundImage: AssetImage('assets/img/avatars/avatar1.jpg'),
+            InkWell(
+              onTap: () => globalKey.currentState!.openDrawer(),
+              child: const CircleAvatar(
+                radius: 18,
+                backgroundColor: primaryColor,
+                backgroundImage: AssetImage('assets/img/avatars/avatar1.jpg'),
+              ),
             ),
             Hero(
               tag: 'logo',

@@ -1,6 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jait_jait/components/const/color.dart';
+import 'package:jait_jait/data/getx/onboarding_getx.dart';
+import 'package:jait_jait/page/home/screen/list_user.dart';
 import 'package:jait_jait/page/home/screen/message_screen.dart';
+import 'package:jait_jait/page/root.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'screen/home_screen.dart';
@@ -14,6 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late PersistentTabController _controller;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final OnBoardingController onBoardingController = Get.find();
 
   @override
   void initState() {
@@ -23,7 +32,8 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
+      HomeScreen(_scaffoldKey),
+      // const RoomsPage(),
       MessageScreen(),
       Container(),
       Container(),
@@ -70,6 +80,61 @@ class _HomePageState extends State<HomePage> {
         return true;
       },
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: Container(
+            color: primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        const DrawerHeader(
+                          child: CircleAvatar(
+                            backgroundColor: primaryColor,
+                            backgroundImage:
+                                AssetImage('assets/img/avatars/avatar1.jpg'),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text('Item 1'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('Item 2'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      "Log out",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onTap: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Root()));
+                      onBoardingController.firstBuildScreen();
+                      await Future.delayed(const Duration(milliseconds: 500),
+                          () async {
+                        await FirebaseAuth.instance.signOut();
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
         body: PersistentTabView(
           context,
           controller: _controller,
